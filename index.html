@@ -1,16 +1,181 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>My Simple WebApp</title>
-  <!-- 스타일 시트가 필요하면 link 태그로 style.css 연결 -->
-  <!-- <link rel="stylesheet" href="style.css" /> -->
+  <title>간단한 커핑 시트</title>
+  <style>
+    body {
+      margin: 20px;
+      font-family: sans-serif;
+    }
+    h1 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 10px;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f0f0f0;
+      width: 150px;
+    }
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    .result {
+      background-color: #f9f9f9;
+      padding: 15px;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+    }
+  </style>
 </head>
 <body>
-  <h1>안녕하세요! 간단 웹앱입니다.</h1>
-  <p id="message"></p>
+  <h1>간단한 커핑 시트</h1>
   
-  <!-- app.js 스크립트 연결 -->
-  <script src="app.js"></script>
+  <!-- 테이블 영역 -->
+  <table>
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>평가 기준</th>
+        <th>메모/점수(선택)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 1) Fragrance/Aroma -->
+      <tr>
+        <td><strong>Fragrance/Aroma</strong></td>
+        <td>
+          <ul style="margin:0; padding-left:20px;">
+            <li>분쇄된 원두의 향 (Fragrance)</li>
+            <li>뜨거운 물을 부은 후 올라오는 향 (Aroma)</li>
+          </ul>
+        </td>
+        <td>
+          <textarea id="inputFragrance" rows="3" placeholder="예) 과일향, 꽃향, 견과류, 초콜릿..."></textarea>
+        </td>
+      </tr>
+      <!-- 2) Flavor (Taste) -->
+      <tr>
+        <td><strong>Flavor (Taste)</strong></td>
+        <td>
+          <ul style="margin:0; padding-left:20px;">
+            <li>커피를 한 모금 머금었을 때 느껴지는 맛과 풍미</li>
+            <li>단맛, 쓴맛, 신맛 등 느껴지는 정도</li>
+          </ul>
+        </td>
+        <td>
+          <textarea id="inputFlavor" rows="3" placeholder="예) 달콤함, 과일 산미, 구운 견과류 느낌 등"></textarea>
+        </td>
+      </tr>
+      <!-- 3) Acidity -->
+      <tr>
+        <td><strong>Acidity</strong></td>
+        <td>
+          <ul style="margin:0; padding-left:20px;">
+            <li>산미의 성격 (부드러운지, 날카로운지)</li>
+            <li>밝고 깨끗한지 혹은 무거운지 등</li>
+          </ul>
+        </td>
+        <td>
+          <textarea id="inputAcidity" rows="3" placeholder="예) 레몬 같은 밝은 산미, 사과 같은 산미 등"></textarea>
+        </td>
+      </tr>
+      <!-- 4) Body -->
+      <tr>
+        <td><strong>Body</strong></td>
+        <td>
+          <ul style="margin:0; padding-left:20px;">
+            <li>바디감(입안에서 느껴지는 무게감)</li>
+            <li>질감(묵직함, 부드러움 등)</li>
+          </ul>
+        </td>
+        <td>
+          <textarea id="inputBody" rows="3" placeholder="예) 부드럽고 묵직함, 중간 바디 등"></textarea>
+        </td>
+      </tr>
+      <!-- 5) Aftertaste -->
+      <tr>
+        <td><strong>Aftertaste</strong></td>
+        <td>
+          <ul style="margin:0; padding-left:20px;">
+            <li>마신 후 입 안에 남는 여운</li>
+            <li>길이(지속성), 맛의 변화</li>
+          </ul>
+        </td>
+        <td>
+          <textarea id="inputAftertaste" rows="3" placeholder="예) 초콜릿 같은 여운, 깔끔하게 떨어짐 등"></textarea>
+        </td>
+      </tr>
+      <!-- 6) 추가 메모 & 피드백 -->
+      <tr>
+        <td><strong>추가 메모 & 피드백</strong></td>
+        <td>
+          <ul style="margin:0; padding-left:20px;">
+            <li>전체적인 인상, 개선 아이디어(로스팅, 추출 관련)</li>
+            <li>“다음 로스팅 시 1차 크랙 30초 조정” 등</li>
+          </ul>
+        </td>
+        <td>
+          <textarea id="inputMemo" rows="3" placeholder="예) 산미가 날카로우니 추출 온도 낮춰봐야겠다."></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 제출 버튼 -->
+  <button id="submitBtn">제출</button>
+
+  <!-- 결과 표시 영역 -->
+  <div id="resultContainer" class="result" style="display: none;">
+    <h2>입력한 커핑 결과</h2>
+    <p><strong>Fragrance/Aroma:</strong> <span id="resFragrance"></span></p>
+    <p><strong>Flavor (Taste):</strong> <span id="resFlavor"></span></p>
+    <p><strong>Acidity:</strong> <span id="resAcidity"></span></p>
+    <p><strong>Body:</strong> <span id="resBody"></span></p>
+    <p><strong>Aftertaste:</strong> <span id="resAftertaste"></span></p>
+    <p><strong>추가 메모 &amp; 피드백:</strong> <span id="resMemo"></span></p>
+  </div>
+
+  <!-- 간단한 스크립트 -->
+  <script>
+    document.getElementById('submitBtn').addEventListener('click', function() {
+      // 각 textarea 값 가져오기
+      const fragrance = document.getElementById('inputFragrance').value.trim();
+      const flavor = document.getElementById('inputFlavor').value.trim();
+      const acidity = document.getElementById('inputAcidity').value.trim();
+      const body = document.getElementById('inputBody').value.trim();
+      const aftertaste = document.getElementById('inputAftertaste').value.trim();
+      const memo = document.getElementById('inputMemo').value.trim();
+
+      // 결과 영역에 출력
+      document.getElementById('resFragrance').textContent = fragrance;
+      document.getElementById('resFlavor').textContent = flavor;
+      document.getElementById('resAcidity').textContent = acidity;
+      document.getElementById('resBody').textContent = body;
+      document.getElementById('resAftertaste').textContent = aftertaste;
+      document.getElementById('resMemo').textContent = memo;
+
+      // 결과 div 보이기
+      document.getElementById('resultContainer').style.display = 'block';
+
+      // 콘솔에 찍고 싶다면 이렇게:
+      // console.log("Fragrance:", fragrance);
+      // console.log("Flavor:", flavor);
+      // ...
+    });
+  </script>
 </body>
 </html>
